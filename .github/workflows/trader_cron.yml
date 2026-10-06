@@ -1,0 +1,30 @@
+name: Cloud Live Trader Automation
+
+on:
+  schedule:
+    # Runs every 5 minutes from Monday to Friday during Indian Market hours (9:15 AM - 3:30 PM IST)
+    - cron: '*/5 3-10 * * 1-5'
+  workflow_dispatch:
+
+jobs:
+  run-trader:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Run Live Trader Script
+        run: |
+          python3 live_cloud_trader.py
+
+      - name: Commit and Push Log Changes
+        run: |
+          git config --global user.name "Sumith Jain"
+          git config --global user.email "sumithjainofficial@gmail.com"
+          git add live_trading_exec.log
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Update trading execution logs [skip ci]" && git push)

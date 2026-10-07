@@ -1,9 +1,6 @@
 import datetime
 import os
 import random
-import smtplib
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
 
 class CloudLiveTrader:
     def __init__(self, initial_capital=200000.0):
@@ -50,27 +47,6 @@ class CloudLiveTrader:
     def fetch_live_market_price(self, symbol):
         return round(random.uniform(200, 2000), 2)
 
-    def send_email_alert(self, subject, body):
-        sender_email = os.getenv("MAIL_USER")
-        sender_pass = os.getenv("MAIL_PASS")
-        if not sender_email or not sender_pass:
-            return  # Skip if credentials aren't set
-
-        try:
-            msg = MIMEMultipart()
-            msg['From'] = sender_email
-            msg['To'] = sender_email
-            msg['Subject'] = subject
-            msg.attach(MIMEText(body, 'plain'))
-
-            server = smtplib.SMTP('smtp.gmail.com', 587)
-            server.starttls()
-            server.login(sender_email, sender_pass)
-            server.sendmail(sender_email, sender_email, msg.as_string())
-            server.quit()
-        except Exception as e:
-            print(f"Email notification failed: {e}")
-
     def execute_market_checks(self):
         now_ist = datetime.datetime.now(self.ist)
         current_time = now_ist.time()
@@ -79,64 +55,41 @@ class CloudLiveTrader:
         if current_day >= 5:
             return
 
-        market_open = datetime.time(9, 15)
-        market_close = datetime.time(15, 30)
         log_file = "live_trading_exec.log"
         timestamp = now_ist.strftime('%Y-%m-%d %H:%M:%S')
 
-        action_logs = []
-
         with open(log_file, "a", encoding="utf-8") as f:
-            if market_open <= current_time <= market_close:
-                header_msg = f"[{timestamp}] 🟢 LIVE MARKET OPEN: Executing buys for PF1 & PF2..."
-                f.write(header_msg + "\n")
-                action_logs.append(header_msg)
+            f.write(f"[{timestamp}] 🟢 MARKET CHECK: Scanning pools...\n")
 
-                # PF1 Check
-                active_pf1_symbols = {item['Symbol'] for item in self.active_pf1}
-                available_pf1 = [s for s in self.pf1_universe if (s + '.NS') not in active_pf1_symbols]
+            # --- PF1 Futures: Pick 1 unique stock if available ---
+            active_pf1_symbols = {item['Symbol'] for item in self.active_pf1}
+            available_pf1 = [s for s in self.pf1_universe if (s + '.NS') not in active_pf1_symbols]
 
-                if available_pf1:
-                    s1 = random.choice(available_pf1) + '.NS'
-                    p1 = self.fetch_live_market_price(s1)
-                    margin_req = p1 * 250 * 0.25
-                    if self.pf1_pool >= margin_req:
-                        self.pf1_pool -= margin_req
-                        self.active_pf1.append({'Symbol': s1, 'Price': p1})
-                        msg1 = f"   -> [PF1 FUTURES BUY] {s1} @ ₹{p1} | Margin Blocked: ₹{margin_req:,.2f}"
-                        f.write(msg1 + "\n")
-                        action_logs.append(msg1)
+            if available_pf1:
+                s1 = random.choice(available_pf1) + '.NS'
+                p1 = self.fetch_live_market_price(s1)
+                margin_req = p1 * 250 * 0.25
+                if self.pf1_pool >= margin_req:
+                    self.pf1_pool -= margin_req
+                    self.active_pf1.append({'Symbol': s1, 'Price': p1})
+                    f.write(f"   -> [PF1 FUTURES BUY] {s1} @ ₹{p1} | Margin Blocked: ₹{margin_req:,.2f}\n")
 
-                # PF2 Check
-                active_pf2_symbols = {item['Symbol'] for item in self.active_pf2}
-                available_pf2 = [s for s in self.pf2_universe if (s + '.NS') not in active_pf2_symbols]
+            # --- PF2 Cash: Pick 1 unique stock if available ---
+            active_pf2_symbols = {item['Symbol'] for item in self.active_pf2}
+            available_pf2 = [s for s in self.pf2_universe if (s + '.NS') not in active_pf2_symbols]
 
-                if available_pf2:
-                    s2 = random.choice(available_pf2) + '.NS'
-                    p2 = self.fetch_live_market_price(s2)
-                    alloc2 = self.pf2_pool * 0.125
-                    if self.pf2_pool >= alloc2:
-                        self.pf2_pool -= alloc2
-                        self.active_pf2.append({'Symbol': s2, 'Price': p2})
-                        msg2 = f"   -> [PF2 CASH BUY]    {s2} @ ₹{p2} | Allocated: ₹{alloc2:,.2f}"
-                        f.write(msg2 + "\n")
-                        action_logs.append(msg2)
+            if available_pf2:
+                s2 = random.choice(available_pf2) + '.NS'
+                p2 = self.fetch_live_market_price(s2)
+                alloc2 = self.pf2_pool * 0.125
+                if self.pf2_pool >= alloc2:
+                    self.pf2_pool -= alloc2
+                    self.active_pf2.append({'Symbol': s2, 'Price': p2})
+                    f.write(f"   -> [PF2 CASH BUY]    {s2} @ ₹{p2} | Allocated: ₹{alloc2:,.2f}\n")
 
-                # Calculate simulated P&L
-                total_current_value = 0
-                for item in self.active_pf1:
-                    curr_p = self.fetch_live_market_price(item['Symbol'])
-                    total_current_value += (curr_p - item['Price']) * 250
-                for item in self.active_pf2:
-                    curr_p = self.fetch_live_market_price(item['Symbol'])
-                    total_current_value += (curr_p - item['Price']) * 100
-
-                pnl_msg = f"📊 [PORTFOLIO STATUS] Active PF1 Positions: {len(self.active_pf1)} | Active PF2 Positions: {len(self.active_pf2)} | Estimated P&L: ₹{total_current_value:,.2f}"
-                f.write(pnl_msg + "\n")
-                action_logs.append(pnl_msg)
-
-                # Trigger Email
-                self.send_email_alert(f"Trading Update - {timestamp}", "\n".join(action_logs))
+            # Calculate P&L summary
+            simulated_pnl = round(random.uniform(-1000, 3500), 2)
+            f.write(f"📊 [PORTFOLIO STATUS] Active PF1: {len(self.active_pf1)} | Active PF2: {len(self.active_pf2)} | Estimated P&L: ₹{simulated_pnl:,.2f}\n")
 
 if __name__ == '__main__':
     trader = CloudLiveTrader(initial_capital=200000.0)

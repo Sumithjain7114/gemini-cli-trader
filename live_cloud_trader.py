@@ -99,6 +99,45 @@ class CloudLiveTrader:
                 if available_pf1:
                     s1 = random.choice(available_pf1) + '.NS'
                     p1 = self.fetch_live_market_price(s1)
-                    margin_req = p1 * 25
-eoh
-EOH
+                    margin_req = p1 * 250 * 0.25
+                    if self.pf1_pool >= margin_req:
+                        self.pf1_pool -= margin_req
+                        self.active_pf1.append({'Symbol': s1, 'Price': p1})
+                        msg1 = f"   -> [PF1 FUTURES BUY] {s1} @ ₹{p1} | Margin Blocked: ₹{margin_req:,.2f}"
+                        f.write(msg1 + "\n")
+                        action_logs.append(msg1)
+
+                # PF2 Check
+                active_pf2_symbols = {item['Symbol'] for item in self.active_pf2}
+                available_pf2 = [s for s in self.pf2_universe if (s + '.NS') not in active_pf2_symbols]
+
+                if available_pf2:
+                    s2 = random.choice(available_pf2) + '.NS'
+                    p2 = self.fetch_live_market_price(s2)
+                    alloc2 = self.pf2_pool * 0.125
+                    if self.pf2_pool >= alloc2:
+                        self.pf2_pool -= alloc2
+                        self.active_pf2.append({'Symbol': s2, 'Price': p2})
+                        msg2 = f"   -> [PF2 CASH BUY]    {s2} @ ₹{p2} | Allocated: ₹{alloc2:,.2f}"
+                        f.write(msg2 + "\n")
+                        action_logs.append(msg2)
+
+                # Calculate simulated P&L
+                total_current_value = 0
+                for item in self.active_pf1:
+                    curr_p = self.fetch_live_market_price(item['Symbol'])
+                    total_current_value += (curr_p - item['Price']) * 250
+                for item in self.active_pf2:
+                    curr_p = self.fetch_live_market_price(item['Symbol'])
+                    total_current_value += (curr_p - item['Price']) * 100
+
+                pnl_msg = f"📊 [PORTFOLIO STATUS] Active PF1 Positions: {len(self.active_pf1)} | Active PF2 Positions: {len(self.active_pf2)} | Estimated P&L: ₹{total_current_value:,.2f}"
+                f.write(pnl_msg + "\n")
+                action_logs.append(pnl_msg)
+
+                # Trigger Email
+                self.send_email_alert(f"Trading Update - {timestamp}", "\n".join(action_logs))
+
+if __name__ == '__main__':
+    trader = CloudLiveTrader(initial_capital=200000.0)
+    trader.execute_market_checks()

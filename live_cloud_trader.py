@@ -91,21 +91,36 @@ class CloudLiveTrader:
             if market_open <= current_time <= market_close:
                 f.write(f"[{timestamp}] 🟢 LIVE MARKET OPEN: Executing buys for PF1 & PF2...\n")
 
-                s1 = random.choice(self.pf1_universe) + '.NS'
-                p1 = self.fetch_live_market_price(s1)
-                margin_req = p1 * 250 * 0.25
-                if self.pf1_pool >= margin_req:
-                    self.pf1_pool -= margin_req
-                    self.active_pf1.append({'Symbol': s1, 'Price': p1})
-                    f.write(f"   -> [PF1 FUTURES BUY] {s1} @ ₹{p1} | Margin Blocked: ₹{margin_req:,.2f}\n")
+                # --- PF1: Filter out already active symbols to prevent duplicates ---
+                active_pf1_symbols = {item['Symbol'] for item in self.active_pf1}
+                available_pf1 = [s for s in self.pf1_universe if (s + '.NS') not in active_pf1_symbols]
 
-                s2 = random.choice(self.pf2_universe) + '.NS'
-                p2 = self.fetch_live_market_price(s2)
-                alloc2 = self.pf2_pool * 0.125
-                if self.pf2_pool >= alloc2:
-                    self.pf2_pool -= alloc2
-                    self.active_pf2.append({'Symbol': s2, 'Price': p2})
-                    f.write(f"   -> [PF2 CASH BUY]    {s2} @ ₹{p2} | Allocated: ₹{alloc2:,.2f}\n")
+                if available_pf1:
+                    s1 = random.choice(available_pf1) + '.NS'
+                    p1 = self.fetch_live_market_price(s1)
+                    margin_req = p1 * 250 * 0.25
+                    if self.pf1_pool >= margin_req:
+                        self.pf1_pool -= margin_req
+                        self.active_pf1.append({'Symbol': s1, 'Price': p1})
+                        f.write(f"   -> [PF1 FUTURES BUY] {s1} @ ₹{p1} | Margin Blocked: ₹{margin_req:,.2f}\n")
+                else:
+                    f.write(f"   -> [PF1 INFO] No available unique stocks left to buy in PF1 universe.\n")
+
+                # --- PF2: Filter out already active symbols to prevent duplicates ---
+                active_pf2_symbols = {item['Symbol'] for item in self.active_pf2}
+                available_pf2 = [s for s in self.pf2_universe if (s + '.NS') not in active_pf2_symbols]
+
+                if available_pf2:
+                    s2 = random.choice(available_pf2) + '.NS'
+                    p2 = self.fetch_live_market_price(s2)
+                    alloc2 = self.pf2_pool * 0.125
+                    if self.pf2_pool >= alloc2:
+                        self.pf2_pool -= alloc2
+                        self.active_pf2.append({'Symbol': s2, 'Price': p2})
+                        f.write(f"   -> [PF2 CASH BUY]    {s2} @ ₹{p2} | Allocated: ₹{alloc2:,.2f}\n")
+                else:
+                    f.write(f"   -> [PF2 INFO] No available unique stocks left to buy in PF2 universe.\n")
+
             elif current_time < market_open:
                 f.write(f"[{timestamp}] ⏳ Pre-market preparation (Market opens at 9:15 AM).\n")
             else:

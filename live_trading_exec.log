@@ -74,3 +74,7 @@
    -> [PF1 FUTURES BUY] 360ONE.NS @ ₹250.52 | Margin Blocked: ₹15,657.50
    -> [PF2 CASH BUY]    ASHOKLEY.NS @ ₹1093.0 | Allocated: ₹25,000.00
 📊 [PORTFOLIO STATUS] Active PF1: 19 | Active PF2: 19 | Estimated P&L: ₹-981.53
+[2026-10-21 13:57:22] 🟢 LIVE MARKET OPEN: Scanning pools...
+   -> [PF1 FUTURES BUY] TRENT.NS @ ₹1941.64 | Margin Blocked: ₹121,352.50
+   -> [PF2 CASH BUY]    HYUNDAI.NS @ ₹262.73 | Allocated: ₹25,000.00
+📊 [PORTFOLIO STATUS] Active PF1: 20 | Active PF2: 20 | Estimated P&L: ₹2,928.98

@@ -78,3 +78,7 @@
    -> [PF1 FUTURES BUY] TRENT.NS @ ₹1941.64 | Margin Blocked: ₹121,352.50
    -> [PF2 CASH BUY]    HYUNDAI.NS @ ₹262.73 | Allocated: ₹25,000.00
 📊 [PORTFOLIO STATUS] Active PF1: 20 | Active PF2: 20 | Estimated P&L: ₹2,928.98
+[2026-10-21 19:34:43] 🟢 LIVE MARKET OPEN: Scanning pools...
+   -> [PF1 FUTURES BUY] TATASTEEL.NS @ ₹209.54 | Margin Blocked: ₹13,096.25
+   -> [PF2 CASH BUY]    VEDL.NS @ ₹718.46 | Allocated: ₹25,000.00
+📊 [PORTFOLIO STATUS] Active PF1: 21 | Active PF2: 21 | Estimated P&L: ₹3,057.34

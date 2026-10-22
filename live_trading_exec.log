@@ -86,3 +86,7 @@
    -> [PF1 FUTURES BUY] HDFCAMC.NS @ ₹1710.15 | Margin Blocked: ₹106,884.38
    -> [PF2 CASH BUY]    SWIGGY.NS @ ₹1576.48 | Allocated: ₹25,000.00
 📊 [PORTFOLIO STATUS] Active PF1: 22 | Active PF2: 22 | Estimated P&L: ₹2,285.17
+[2026-10-22 19:33:57] 🟢 LIVE MARKET OPEN: Scanning pools...
+   -> [PF1 FUTURES BUY] CANBK.NS @ ₹1457.82 | Margin Blocked: ₹91,113.75
+   -> [PF2 CASH BUY]    HAVELLS.NS @ ₹1819.86 | Allocated: ₹25,000.00
+📊 [PORTFOLIO STATUS] Active PF1: 23 | Active PF2: 23 | Estimated P&L: ₹4,131.91

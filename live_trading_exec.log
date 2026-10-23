@@ -90,3 +90,7 @@
    -> [PF1 FUTURES BUY] CANBK.NS @ ₹1457.82 | Margin Blocked: ₹91,113.75
    -> [PF2 CASH BUY]    HAVELLS.NS @ ₹1819.86 | Allocated: ₹25,000.00
 📊 [PORTFOLIO STATUS] Active PF1: 23 | Active PF2: 23 | Estimated P&L: ₹4,131.91
+[2026-10-23 13:55:57] 🟢 LIVE MARKET OPEN: Scanning pools...
+   -> [PF1 FUTURES BUY] LICI.NS @ ₹1005.95 | Margin Blocked: ₹62,871.88
+   -> [PF2 CASH BUY]    IOC.NS @ ₹805.37 | Allocated: ₹25,000.00
+📊 [PORTFOLIO STATUS] Active PF1: 24 | Active PF2: 24 | Estimated P&L: ₹1,627.14

@@ -94,3 +94,7 @@
    -> [PF1 FUTURES BUY] LICI.NS @ ₹1005.95 | Margin Blocked: ₹62,871.88
    -> [PF2 CASH BUY]    IOC.NS @ ₹805.37 | Allocated: ₹25,000.00
 📊 [PORTFOLIO STATUS] Active PF1: 24 | Active PF2: 24 | Estimated P&L: ₹1,627.14
+[2026-10-23 19:15:17] 🟢 LIVE MARKET OPEN: Scanning pools...
+   -> [PF1 FUTURES BUY] LUPIN.NS @ ₹1807.36 | Margin Blocked: ₹112,960.00
+   -> [PF2 CASH BUY]    RECLTD.NS @ ₹1923.82 | Allocated: ₹25,000.00
+📊 [PORTFOLIO STATUS] Active PF1: 25 | Active PF2: 25 | Estimated P&L: ₹1,455.50

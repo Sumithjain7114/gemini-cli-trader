@@ -118,3 +118,7 @@
    -> [PF1 FUTURES BUY] BSE.NS @ ₹1340.14 | Margin Blocked: ₹83,758.75
    -> [PF2 CASH BUY]    MUTHOOTFIN.NS @ ₹1139.74 | Allocated: ₹25,000.00
 📊 [PORTFOLIO STATUS] Active PF1: 30 | Active PF2: 30 | Estimated P&L: ₹1,226.56
+[2026-10-28 21:45:43] 🟢 LIVE MARKET OPEN: Scanning pools...
+   -> [PF1 FUTURES BUY] VOLTAS.NS @ ₹861.77 | Margin Blocked: ₹53,860.62
+   -> [PF2 CASH BUY]    INOXWIND.NS @ ₹1164.16 | Allocated: ₹25,000.00
+📊 [PORTFOLIO STATUS] Active PF1: 31 | Active PF2: 31 | Estimated P&L: ₹1,442.25

@@ -114,3 +114,7 @@
    -> [PF1 FUTURES BUY] BHARATFORG.NS @ ₹705.6 | Margin Blocked: ₹44,100.00
    -> [PF2 CASH BUY]    PERSISTENT.NS @ ₹961.92 | Allocated: ₹25,000.00
 📊 [PORTFOLIO STATUS] Active PF1: 29 | Active PF2: 29 | Estimated P&L: ₹-910.20
+[2026-10-28 15:01:49] 🟢 LIVE MARKET OPEN: Scanning pools...
+   -> [PF1 FUTURES BUY] BSE.NS @ ₹1340.14 | Margin Blocked: ₹83,758.75
+   -> [PF2 CASH BUY]    MUTHOOTFIN.NS @ ₹1139.74 | Allocated: ₹25,000.00
+📊 [PORTFOLIO STATUS] Active PF1: 30 | Active PF2: 30 | Estimated P&L: ₹1,226.56

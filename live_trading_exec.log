@@ -122,3 +122,7 @@
    -> [PF1 FUTURES BUY] VOLTAS.NS @ ₹861.77 | Margin Blocked: ₹53,860.62
    -> [PF2 CASH BUY]    INOXWIND.NS @ ₹1164.16 | Allocated: ₹25,000.00
 📊 [PORTFOLIO STATUS] Active PF1: 31 | Active PF2: 31 | Estimated P&L: ₹1,442.25
+[2026-10-29 15:15:15] 🟢 LIVE MARKET OPEN: Scanning pools...
+   -> [PF1 FUTURES BUY] ENRIN.NS @ ₹1203.86 | Margin Blocked: ₹75,241.25
+   -> [PF2 CASH BUY]    HINDALCO.NS @ ₹1836.64 | Allocated: ₹25,000.00
+📊 [PORTFOLIO STATUS] Active PF1: 32 | Active PF2: 32 | Estimated P&L: ₹-514.49

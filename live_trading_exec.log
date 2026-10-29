@@ -126,3 +126,7 @@
    -> [PF1 FUTURES BUY] ENRIN.NS @ ₹1203.86 | Margin Blocked: ₹75,241.25
    -> [PF2 CASH BUY]    HINDALCO.NS @ ₹1836.64 | Allocated: ₹25,000.00
 📊 [PORTFOLIO STATUS] Active PF1: 32 | Active PF2: 32 | Estimated P&L: ₹-514.49
+[2026-10-29 21:57:12] 🟢 LIVE MARKET OPEN: Scanning pools...
+   -> [PF1 FUTURES BUY] COALINDIA.NS @ ₹885.59 | Margin Blocked: ₹55,349.38
+   -> [PF2 CASH BUY]    KAYNES.NS @ ₹1709.97 | Allocated: ₹25,000.00
+📊 [PORTFOLIO STATUS] Active PF1: 33 | Active PF2: 33 | Estimated P&L: ₹1,333.97

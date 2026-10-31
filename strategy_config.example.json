@@ -1,0 +1,44 @@
+{
+  "candle_interval": null,
+  "daily_history_days": null,
+  "signal_history_days": null,
+  "rsi_period": null,
+  "volume_average_period": null,
+  "breakout_lookback": null,
+  "support_lookback": null,
+  "pullback_support_tolerance_pct": null,
+  "stop_buffer_pct": null,
+  "target_r_multiple": null,
+  "trailing_distance_pct": null,
+  "bear_market_stop_tighten_pct": null,
+  "market_index_symbol": "NIFTY 50",
+  "market_200dma_period": 200,
+  "sector_index_period": 200,
+  "sector_index_by_industry": {},
+  "sector_index_symbols": [],
+  "institutional_override_signals": [
+    "pocket_pivot",
+    "bull_snort"
+  ],
+  "minervini": {
+    "fast_ma_period": 50,
+    "mid_ma_period": 150,
+    "long_ma_period": 200,
+    "trend_lookback": null,
+    "min_200dma_rise_pct": null,
+    "min_above_52w_low_pct": null,
+    "max_below_52w_high_pct": null,
+    "min_rs_percentile": null
+  },
+  "nifty500_csv_url": "https://www.niftyindices.com/Index_Constituent_Data/NIFTY_500.csv",
+  "paper_state_path": "paper_state.json",
+  "rolling_win_rate_trades": null,
+  "eod_exit_time": null,
+  "exit_on_intraday_low": true,
+  "volume": {
+    "average_period": 50,
+    "pocket_pivot_lookback": 10,
+    "bull_snort_multiple": 3.0,
+    "bull_snort_close_within_pct": 35.0
+  }
+}

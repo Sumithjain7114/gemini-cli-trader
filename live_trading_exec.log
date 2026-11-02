@@ -142,3 +142,7 @@
    -> [PF1 FUTURES BUY] CUMMINSIND.NS @ ₹280.59 | Margin Blocked: ₹17,536.88
    -> [PF2 CASH BUY]    BAJAJHLDNG.NS @ ₹265.87 | Allocated: ₹25,000.00
 📊 [PORTFOLIO STATUS] Active PF1: 36 | Active PF2: 36 | Estimated P&L: ₹3,875.48
+[2026-11-03 02:07:52] 🟢 LIVE MARKET OPEN: Scanning pools...
+   -> [PF1 FUTURES BUY] INOXWIND.NS @ ₹1454.64 | Margin Blocked: ₹90,915.00
+   -> [PF2 CASH BUY]    MUTHOOTFIN.NS @ ₹560.17 | Allocated: ₹25,000.00
+📊 [PORTFOLIO STATUS] Active PF1: 37 | Active PF2: 37 | Estimated P&L: ₹2,416.40

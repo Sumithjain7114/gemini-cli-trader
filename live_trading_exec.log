@@ -158,3 +158,7 @@
    -> [PF1 FUTURES BUY] RELIANCE.NS @ ₹1641.28 | Margin Blocked: ₹102,580.00
    -> [PF2 CASH BUY]    POLYCAB.NS @ ₹768.68 | Allocated: ₹25,000.00
 📊 [PORTFOLIO STATUS] Active PF1: 40 | Active PF2: 40 | Estimated P&L: ₹9.94
+[2026-11-04 23:45:37] 🟢 LIVE MARKET OPEN: Scanning pools...
+   -> [PF1 FUTURES BUY] AXISBANK.NS @ ₹755.71 | Margin Blocked: ₹47,231.88
+   -> [PF2 CASH BUY]    IRFC.NS @ ₹641.65 | Allocated: ₹25,000.00
+📊 [PORTFOLIO STATUS] Active PF1: 41 | Active PF2: 41 | Estimated P&L: ₹-551.49

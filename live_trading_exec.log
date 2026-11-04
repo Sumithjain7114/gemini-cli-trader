@@ -154,3 +154,7 @@
    -> [PF1 FUTURES BUY] FORCEMOT.NS @ ₹364.13 | Margin Blocked: ₹22,758.12
    -> [PF2 CASH BUY]    RADICO.NS @ ₹1224.24 | Allocated: ₹25,000.00
 📊 [PORTFOLIO STATUS] Active PF1: 39 | Active PF2: 39 | Estimated P&L: ₹-1,266.46
+[2026-11-04 16:15:01] 🟢 LIVE MARKET OPEN: Scanning pools...
+   -> [PF1 FUTURES BUY] RELIANCE.NS @ ₹1641.28 | Margin Blocked: ₹102,580.00
+   -> [PF2 CASH BUY]    POLYCAB.NS @ ₹768.68 | Allocated: ₹25,000.00
+📊 [PORTFOLIO STATUS] Active PF1: 40 | Active PF2: 40 | Estimated P&L: ₹9.94

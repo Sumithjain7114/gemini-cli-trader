@@ -162,3 +162,7 @@
    -> [PF1 FUTURES BUY] AXISBANK.NS @ ₹755.71 | Margin Blocked: ₹47,231.88
    -> [PF2 CASH BUY]    IRFC.NS @ ₹641.65 | Allocated: ₹25,000.00
 📊 [PORTFOLIO STATUS] Active PF1: 41 | Active PF2: 41 | Estimated P&L: ₹-551.49
+[2026-11-05 16:10:45] 🟢 LIVE MARKET OPEN: Scanning pools...
+   -> [PF1 FUTURES BUY] MARUTI.NS @ ₹1882.58 | Margin Blocked: ₹117,661.25
+   -> [PF2 CASH BUY]    COLPAL.NS @ ₹729.89 | Allocated: ₹25,000.00
+📊 [PORTFOLIO STATUS] Active PF1: 42 | Active PF2: 42 | Estimated P&L: ₹3,089.79

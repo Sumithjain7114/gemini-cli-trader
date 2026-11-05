@@ -166,3 +166,7 @@
    -> [PF1 FUTURES BUY] MARUTI.NS @ ₹1882.58 | Margin Blocked: ₹117,661.25
    -> [PF2 CASH BUY]    COLPAL.NS @ ₹729.89 | Allocated: ₹25,000.00
 📊 [PORTFOLIO STATUS] Active PF1: 42 | Active PF2: 42 | Estimated P&L: ₹3,089.79
+[2026-11-05 23:48:39] 🟢 LIVE MARKET OPEN: Scanning pools...
+   -> [PF1 FUTURES BUY] ADANIGREEN.NS @ ₹1272.45 | Margin Blocked: ₹79,528.12
+   -> [PF2 CASH BUY]    EICHERMOT.NS @ ₹1544.4 | Allocated: ₹25,000.00
+📊 [PORTFOLIO STATUS] Active PF1: 43 | Active PF2: 43 | Estimated P&L: ₹-643.63

@@ -174,3 +174,7 @@
    -> [PF1 FUTURES BUY] JUBLFOOD.NS @ ₹1739.37 | Margin Blocked: ₹108,710.62
    -> [PF2 CASH BUY]    COLPAL.NS @ ₹438.95 | Allocated: ₹25,000.00
 📊 [PORTFOLIO STATUS] Active PF1: 44 | Active PF2: 44 | Estimated P&L: ₹2,516.79
+[2026-11-06 23:12:04] 🟢 LIVE MARKET OPEN: Scanning pools...
+   -> [PF1 FUTURES BUY] JINDALSTEL.NS @ ₹1941.31 | Margin Blocked: ₹121,331.88
+   -> [PF2 CASH BUY]    M&M.NS @ ₹863.89 | Allocated: ₹25,000.00
+📊 [PORTFOLIO STATUS] Active PF1: 45 | Active PF2: 45 | Estimated P&L: ₹-651.31

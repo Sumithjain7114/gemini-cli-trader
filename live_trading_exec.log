@@ -190,3 +190,7 @@
    -> [PF1 FUTURES BUY] LTM.NS @ ₹1753.95 | Margin Blocked: ₹109,621.88
    -> [PF2 CASH BUY]    SBIN.NS @ ₹1784.93 | Allocated: ₹25,000.00
 📊 [PORTFOLIO STATUS] Active PF1: 48 | Active PF2: 48 | Estimated P&L: ₹4,126.74
+[2026-11-11 23:35:49] 🟢 LIVE MARKET OPEN: Scanning pools...
+   -> [PF1 FUTURES BUY] PNBHOUSING.NS @ ₹1023.91 | Margin Blocked: ₹63,994.38
+   -> [PF2 CASH BUY]    OIL.NS @ ₹473.42 | Allocated: ₹25,000.00
+📊 [PORTFOLIO STATUS] Active PF1: 49 | Active PF2: 49 | Estimated P&L: ₹4,295.64

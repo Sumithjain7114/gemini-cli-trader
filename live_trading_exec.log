@@ -186,3 +186,7 @@
    -> [PF1 FUTURES BUY] ADANIENT.NS @ ₹555.34 | Margin Blocked: ₹34,708.75
    -> [PF2 CASH BUY]    JSWENERGY.NS @ ₹224.62 | Allocated: ₹25,000.00
 📊 [PORTFOLIO STATUS] Active PF1: 47 | Active PF2: 47 | Estimated P&L: ₹1,059.33
+[2026-11-11 16:09:41] 🟢 LIVE MARKET OPEN: Scanning pools...
+   -> [PF1 FUTURES BUY] LTM.NS @ ₹1753.95 | Margin Blocked: ₹109,621.88
+   -> [PF2 CASH BUY]    SBIN.NS @ ₹1784.93 | Allocated: ₹25,000.00
+📊 [PORTFOLIO STATUS] Active PF1: 48 | Active PF2: 48 | Estimated P&L: ₹4,126.74

@@ -198,3 +198,7 @@
    -> [PF1 FUTURES BUY] 360ONE.NS @ ₹1648.77 | Margin Blocked: ₹103,048.12
    -> [PF2 CASH BUY]    POLYCAB.NS @ ₹1413.38 | Allocated: ₹25,000.00
 📊 [PORTFOLIO STATUS] Active PF1: 50 | Active PF2: 50 | Estimated P&L: ₹-1,068.90
+[2026-11-13 00:11:12] 🟢 LIVE MARKET OPEN: Scanning pools...
+   -> [PF1 FUTURES BUY] CANBK.NS @ ₹809.23 | Margin Blocked: ₹50,576.88
+   -> [PF2 CASH BUY]    PFC.NS @ ₹954.05 | Allocated: ₹25,000.00
+📊 [PORTFOLIO STATUS] Active PF1: 51 | Active PF2: 51 | Estimated P&L: ₹-1,350.12

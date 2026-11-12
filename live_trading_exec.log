@@ -194,3 +194,7 @@
    -> [PF1 FUTURES BUY] PNBHOUSING.NS @ ₹1023.91 | Margin Blocked: ₹63,994.38
    -> [PF2 CASH BUY]    OIL.NS @ ₹473.42 | Allocated: ₹25,000.00
 📊 [PORTFOLIO STATUS] Active PF1: 49 | Active PF2: 49 | Estimated P&L: ₹4,295.64
+[2026-11-12 16:21:47] 🟢 LIVE MARKET OPEN: Scanning pools...
+   -> [PF1 FUTURES BUY] 360ONE.NS @ ₹1648.77 | Margin Blocked: ₹103,048.12
+   -> [PF2 CASH BUY]    POLYCAB.NS @ ₹1413.38 | Allocated: ₹25,000.00
+📊 [PORTFOLIO STATUS] Active PF1: 50 | Active PF2: 50 | Estimated P&L: ₹-1,068.90

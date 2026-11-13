@@ -202,3 +202,7 @@
    -> [PF1 FUTURES BUY] CANBK.NS @ ₹809.23 | Margin Blocked: ₹50,576.88
    -> [PF2 CASH BUY]    PFC.NS @ ₹954.05 | Allocated: ₹25,000.00
 📊 [PORTFOLIO STATUS] Active PF1: 51 | Active PF2: 51 | Estimated P&L: ₹-1,350.12
+[2026-11-13 16:17:57] 🟢 LIVE MARKET OPEN: Scanning pools...
+   -> [PF1 FUTURES BUY] DLF.NS @ ₹711.28 | Margin Blocked: ₹44,455.00
+   -> [PF2 CASH BUY]    IRFC.NS @ ₹365.74 | Allocated: ₹25,000.00
+📊 [PORTFOLIO STATUS] Active PF1: 52 | Active PF2: 52 | Estimated P&L: ₹1,541.12

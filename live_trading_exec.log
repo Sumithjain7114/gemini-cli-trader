@@ -206,3 +206,7 @@
    -> [PF1 FUTURES BUY] DLF.NS @ ₹711.28 | Margin Blocked: ₹44,455.00
    -> [PF2 CASH BUY]    IRFC.NS @ ₹365.74 | Allocated: ₹25,000.00
 📊 [PORTFOLIO STATUS] Active PF1: 52 | Active PF2: 52 | Estimated P&L: ₹1,541.12
+[2026-11-13 23:44:00] 🟢 LIVE MARKET OPEN: Scanning pools...
+   -> [PF1 FUTURES BUY] ABCAPITAL.NS @ ₹764.63 | Margin Blocked: ₹47,789.38
+   -> [PF2 CASH BUY]    TVSMOTOR.NS @ ₹210.48 | Allocated: ₹25,000.00
+📊 [PORTFOLIO STATUS] Active PF1: 53 | Active PF2: 53 | Estimated P&L: ₹453.74

@@ -210,3 +210,7 @@
    -> [PF1 FUTURES BUY] ABCAPITAL.NS @ ₹764.63 | Margin Blocked: ₹47,789.38
    -> [PF2 CASH BUY]    TVSMOTOR.NS @ ₹210.48 | Allocated: ₹25,000.00
 📊 [PORTFOLIO STATUS] Active PF1: 53 | Active PF2: 53 | Estimated P&L: ₹453.74
+[2026-11-16 16:25:42] 🟢 LIVE MARKET OPEN: Scanning pools...
+   -> [PF1 FUTURES BUY] SRF.NS @ ₹1452.23 | Margin Blocked: ₹90,764.38
+   -> [PF2 CASH BUY]    MPHASIS.NS @ ₹708.89 | Allocated: ₹25,000.00
+📊 [PORTFOLIO STATUS] Active PF1: 54 | Active PF2: 54 | Estimated P&L: ₹-804.79

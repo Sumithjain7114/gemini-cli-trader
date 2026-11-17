@@ -214,3 +214,7 @@
    -> [PF1 FUTURES BUY] SRF.NS @ ₹1452.23 | Margin Blocked: ₹90,764.38
    -> [PF2 CASH BUY]    MPHASIS.NS @ ₹708.89 | Allocated: ₹25,000.00
 📊 [PORTFOLIO STATUS] Active PF1: 54 | Active PF2: 54 | Estimated P&L: ₹-804.79
+[2026-11-17 17:09:50] 🟢 LIVE MARKET OPEN: Scanning pools...
+   -> [PF1 FUTURES BUY] PFC.NS @ ₹1740.82 | Margin Blocked: ₹108,801.25
+   -> [PF2 CASH BUY]    SHREECEM.NS @ ₹1632.01 | Allocated: ₹25,000.00
+📊 [PORTFOLIO STATUS] Active PF1: 55 | Active PF2: 55 | Estimated P&L: ₹2,890.00

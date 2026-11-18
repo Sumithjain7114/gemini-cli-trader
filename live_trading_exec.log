@@ -218,3 +218,7 @@
    -> [PF1 FUTURES BUY] PFC.NS @ ₹1740.82 | Margin Blocked: ₹108,801.25
    -> [PF2 CASH BUY]    SHREECEM.NS @ ₹1632.01 | Allocated: ₹25,000.00
 📊 [PORTFOLIO STATUS] Active PF1: 55 | Active PF2: 55 | Estimated P&L: ₹2,890.00
+[2026-11-18 16:57:35] 🟢 LIVE MARKET OPEN: Scanning pools...
+   -> [PF1 FUTURES BUY] PERSISTENT.NS @ ₹1749.62 | Margin Blocked: ₹109,351.25
+   -> [PF2 CASH BUY]    ANANDRATHI.NS @ ₹922.96 | Allocated: ₹25,000.00
+📊 [PORTFOLIO STATUS] Active PF1: 56 | Active PF2: 56 | Estimated P&L: ₹3,042.78

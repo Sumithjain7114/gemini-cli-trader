@@ -1,0 +1,309 @@
+//@version=6
+indicator("Simple Volume + Pocket Pivots [Custom Clone]", 
+    shorttitle="SV + PP", 
+    overlay=false, 
+    max_labels_count=500)
+
+//====================================================================
+// GROUPS & INPUTS
+//====================================================================
+gCore       = "1. Core Volume"
+gPP         = "2. Pocket Pivot"
+gDry        = "3. Dry Volume"
+gBull       = "4. Bull Snort"
+gPower      = "5. Power Volume"
+gHV         = "6. Highest / Lowest Volume"
+gTable      = "7. Statistics Table"
+gPaint      = "8. Paint Price Bars"
+gColors     = "9. Colors"
+gProjection = "10. Projected Volume"
+
+volMaLen = input.int(50, "Volume Moving Average", minval=1, group=gCore)
+showPP     = input.bool(true, "Show Pocket Pivot Volume", group=gPP)
+ppLen      = input.int(10, "Pocket Pivot Lookback", options=[5, 10, 20], group=gPP)
+showDry    = input.bool(true, "Show Dry Volume", group=gDry)
+dryDivisor = input.float(5.0, "Low Volume Fraction (MA ÷ value)", minval=1.0, step=0.5, group=gDry)
+showBullSnort = input.bool(true, "Show Bull Snort", group=gBull)
+bullAvgLen    = input.int(50, "Bull Snort Volume Average", minval=1, group=gBull)
+bullVolMult   = input.float(3.0, "Volume Multiple", minval=1, step=0.1, group=gBull)
+bullClosePct  = input.float(35.0, "Close Within % Of High", minval=1, maxval=100, group=gBull)
+bullBg        = input.bool(false, "Highlight Bull Snort Background", group=gBull)
+showPower        = input.bool(true, "Show Power Volume", group=gPower)
+showDownPower    = input.bool(true, "Show Down-Day Power Volume", group=gPower)
+powerMinVolume   = input.float(500000, "Minimum Volume", minval=0, step=100000, group=gPower)
+powerMinMove     = input.float(5.0, "Minimum Price Move %", minval=0.1, step=0.1, group=gPower)
+powerBackground  = input.bool(true, "Highlight Background", group=gPower)
+showHVLabels     = input.bool(true, "Show HVE / HVY / HVQ Labels", group=gHV)
+showHVColors     = input.bool(true, "Color Highest Volume Bars", group=gHV)
+hvOnlyUpDays     = input.bool(true, "Special HV Colors Only On Up Days", group=gHV)
+latestHVOnly     = input.bool(false, "Keep Only Latest HV Label", group=gHV)
+showHVVolume     = input.bool(true, "Show Formatted Volume In Label", group=gHV)
+showHVPercent    = input.bool(true, "Show RVol % In Label", group=gHV)
+showLowLabels    = input.bool(true, "Show LVY / LVQ", group=gHV)
+showTable       = input.bool(true, "Show Statistics Table", group=gTable)
+rvolLen         = input.int(50, "Relative Volume Lookback", minval=1, group=gTable)
+includeCurrent  = input.bool(false, "Include Current Bar In RVol Average", group=gTable)
+rvolAsMultiple  = input.bool(true, "Show RVol As 1.5x Instead Of 150%", group=gTable)
+showBuzz        = input.bool(false, "Show Volume Buzz Instead Of RVol", group=gTable)
+turnLen = input.int(50, "Average Turnover Period", options=[10, 20, 50], group=gTable)
+turnMethod = input.string("SMA", "Average Price Method", options=["SMA", "VWAP"], group=gTable)
+udLen = input.int(50, "Up/Down Volume Lookback", minval=2, group=gTable)
+tableLayout = input.string("Horizontal", "Table Layout", options=["Horizontal", "Vertical"], group=gTable)
+tablePositionInput = input.string("Top Right", "Table Position", options=["Top Right", "Top Left", "Bottom Right", "Bottom Left"], group=gTable)
+showProjectedVolume = input.bool(true, "Show Projected Daily Volume", group=gProjection)
+sessionMinutes      = input.int(375, "Trading Session Minutes", minval=1, group=gProjection)
+sessionStartHour    = input.int(9, "Session Start Hour", minval=0, maxval=23, group=gProjection)
+sessionStartMinute  = input.int(15, "Session Start Minute", minval=0, maxval=59, group=gProjection)
+paintBars     = input.bool(false, "Paint Price Bars", group=gPaint)
+paintPP       = input.bool(true, "Paint Pocket Pivots", group=gPaint)
+paintHighVol  = input.bool(true, "Paint High Volume", group=gPaint)
+paintDry      = input.bool(true, "Paint Dry Volume", group=gPaint)
+paintHV       = input.bool(true, "Paint Highest Volume", group=gPaint)
+
+colDefault  = input.color(color.rgb(90, 90, 90), "Normal / Noise", group=gColors)
+colPP       = input.color(color.rgb(41, 98, 255), "Pocket Pivot", group=gColors)
+colUp       = input.color(color.rgb(0, 180, 90), "High Volume Up", group=gColors)
+colDown     = input.color(color.rgb(220, 50, 50), "High Volume Down", group=gColors)
+colDry      = input.color(color.orange, "Dry Volume", group=gColors)
+colHVE      = input.color(color.fuchsia, "HVE", group=gColors)
+colHVY      = input.color(color.aqua, "HVY", group=gColors)
+colHVQ      = input.color(color.yellow, "HVQ", group=gColors)
+colIPO      = input.color(color.rgb(160, 100, 255), "IPO Volume", group=gColors)
+colBull     = input.color(color.purple, "Bull Snort", group=gColors)
+colPowerUp  = input.color(color.lime, "Power Volume Up", group=gColors)
+colPowerDn  = input.color(color.red, "Power Volume Down", group=gColors)
+
+//====================================================================
+// CALCULATIONS
+//====================================================================
+upDay   = close > close[1]
+downDay = close < close[1]
+volMA = ta.sma(volume, volMaLen)
+
+downVolume = downDay ? volume : 0.0
+highestRecentDownVolume = ta.highest(downVolume, ppLen)[1]
+pocketPivot = showPP and upDay and not na(highestRecentDownVolume) and volume > highestRecentDownVolume
+
+highUpVolume = upDay and not na(volMA) and volume > volMA
+highDownVolume = downDay and not na(volMA) and volume > volMA
+dryVolume = showDry and not na(volMA) and volume <= volMA / dryDivisor
+
+bullAvg = ta.sma(volume, bullAvgLen)
+barRange = high - low
+closeNearHigh = barRange > 0 ? ((high - close) / barRange) * 100 <= bullClosePct : false
+bullSnort = showBullSnort and not na(bullAvg) and volume >= bullAvg * bullVolMult and closeNearHigh and close > close[1]
+
+priceMovePct = not na(close[1]) and close[1] != 0 ? ((close / close[1]) - 1.0) * 100 : 0.0
+powerVolume = showPower and volume >= powerMinVolume and math.abs(priceMovePct) >= powerMinMove
+powerUp   = powerVolume and priceMovePct > 0
+powerDown = powerVolume and priceMovePct < 0 and showDownPower
+
+isIPO = na(close[1]) and not na(close)
+
+var float maxVolumeEver = na
+isHVE = not isIPO and not na(maxVolumeEver) and volume > maxVolumeEver
+maxVolumeEver := na(maxVolumeEver) ? volume : math.max(maxVolumeEver, volume)
+
+int yearBars = timeframe.isdaily ? 252 : timeframe.isweekly ? 52 : timeframe.ismonthly ? 12 : 252
+int quarterBars = timeframe.isdaily ? 63 : timeframe.isweekly ? 13 : timeframe.ismonthly ? 3 : 63
+prevYearHigh    = ta.highest(volume[1], yearBars)
+prevQuarterHigh = ta.highest(volume[1], quarterBars)
+prevYearLow     = ta.lowest(volume[1], yearBars)
+prevQuarterLow  = ta.lowest(volume[1], quarterBars)
+dailyOrHigher = timeframe.isdaily or timeframe.isweekly or timeframe.ismonthly
+isHVY = dailyOrHigher and not isHVE and not na(prevYearHigh) and volume > prevYearHigh
+isHVQ = dailyOrHigher and not isHVE and not isHVY and not na(prevQuarterHigh) and volume > prevQuarterHigh
+isLVY = dailyOrHigher and barstate.isconfirmed and not na(prevYearLow) and volume < prevYearLow
+isLVQ = dailyOrHigher and barstate.isconfirmed and not isLVY and not na(prevQuarterLow) and volume < prevQuarterLow
+
+rvolAverage = includeCurrent ? ta.sma(volume, rvolLen) : ta.sma(volume[1], rvolLen)
+rvol = not na(rvolAverage) and rvolAverage > 0 ? volume / rvolAverage : na
+volumeBuzz = not na(rvol) ? (rvol - 1.0) * 100 : na
+
+avgVolumeTurn = ta.sma(volume, turnLen)
+avgPrice = turnMethod == "VWAP" ? ta.vwma(close, turnLen) : ta.sma(close, turnLen)
+averageTurnover = avgVolumeTurn * avgPrice
+currentTurnover = close * volume
+
+upVolSeries   = upDay ? volume : 0.0
+downVolSeries = downDay ? volume : 0.0
+avgUpVol   = ta.sma(upVolSeries, udLen)
+avgDownVol = ta.sma(downVolSeries, udLen)
+udRatio = not na(avgDownVol) and avgDownVol > 0 ? avgUpVol / avgDownVol : na
+
+oneMinuteLiquidity = request.security(syminfo.tickerid, "1", close * ta.sma(volume, 50))
+
+sessionStart = timestamp(syminfo.timezone, year, month, dayofmonth, sessionStartHour, sessionStartMinute)
+elapsedMinutes = math.max((timenow - sessionStart) / 60000.0, 1.0)
+sessionProgress = math.min(elapsedMinutes / sessionMinutes, 1.0)
+projectedVolume = timeframe.isdaily and barstate.islast ? volume / math.max(sessionProgress, 0.01) : na
+projectedRVol = not na(projectedVolume) and not na(rvolAverage) and rvolAverage > 0 ? projectedVolume / rvolAverage : na
+
+color baseVolumeColor = pocketPivot ? colPP : highUpVolume ? colUp : highDownVolume ? colDown : dryVolume ? colDry : colDefault
+bool allowHVColor = not hvOnlyUpDays or upDay
+color finalVolumeColor = baseVolumeColor
+
+if showHVColors and allowHVColor
+    if isHVE
+        finalVolumeColor := colHVE
+    else if isHVY
+        finalVolumeColor := colHVY
+    else if isHVQ
+        finalVolumeColor := colHVQ
+
+if isIPO
+    finalVolumeColor := colIPO
+
+//====================================================================
+// PLOTS & HOVER DATA (DATA WINDOW)
+// Values in Rupees are divided by 1,00,00,000 (Crores) to prevent 
+// them from squashing the volume bars on your chart scale.
+//====================================================================
+plot(showProjectedVolume ? projectedVolume : na, title="Projected Volume", style=plot.style_columns, color=color.new(finalVolumeColor, 75))
+plot(volume, title="Volume", style=plot.style_columns, color=finalVolumeColor)
+plot(volMA, title="Volume Average", color=color.new(color.gray, 100), display=display.status_line + display.price_scale)
+
+// HOVER DATA - Visible only in the Data Window on the right sidebar
+plot(rvol, title="Hover: RVol (x)", display=display.data_window)
+plot(averageTurnover / 10000000, title="Hover: Avg ₹Vol (Cr)", display=display.data_window)
+plot(currentTurnover / 10000000, title="Hover: Today ₹Vol (Cr)", display=display.data_window)
+plot(udRatio, title="Hover: U/D Ratio", display=display.data_window)
+plot(oneMinuteLiquidity / 10000000, title="Hover: 1m Liq (Cr)", display=display.data_window)
+
+//====================================================================
+// MARKERS & BACKGROUNDS
+//====================================================================
+plotshape(bullSnort, title="Bull Snort", style=shape.square, location=location.bottom, color=colBull, size=size.tiny)
+bgcolor(bullBg and bullSnort ? color.new(colBull, 88) : na, title="Bull Snort Background")
+bgcolor(powerBackground and powerUp ? color.new(colPowerUp, 88) : powerBackground and powerDown ? color.new(colPowerDn, 88) : na, title="Power Volume")
+
+//====================================================================
+// FORMAT FUNCTIONS
+//====================================================================
+f_formatNumber(float x) =>
+    string result = na(x) ? "—" : x >= 10000000 ? str.tostring(x / 10000000, "#.##") + "Cr" : x >= 1000000  ? str.tostring(x / 1000000, "#.##") + "M" : x >= 1000     ? str.tostring(x / 1000, "#.##") + "K" : str.tostring(x, "#")
+    result
+
+f_hvText(string name) =>
+    string txt = name
+    if showHVVolume
+        txt += "\n" + f_formatNumber(volume)
+    if showHVPercent and not na(volMA) and volMA > 0
+        txt += "\n(" + str.tostring(volume / volMA * 100, "#") + "%)"
+    txt
+
+//====================================================================
+// LABELS
+//====================================================================
+var label lastHVLabel = na
+bool anyHV = isHVE or isHVY or isHVQ
+string hvName = isHVE ? "HVE" : isHVY ? "HVY" : isHVQ ? "HVQ" : ""
+color hvColor = isHVE ? colHVE : isHVY ? colHVY : colHVQ
+
+if showHVLabels and anyHV
+    if latestHVOnly and not na(lastHVLabel)
+        label.delete(lastHVLabel)
+    lastHVLabel := label.new(bar_index, volume, f_hvText(hvName), style=label.style_label_down, color=hvColor, textcolor=color.black, size=size.tiny)
+
+if showLowLabels and isLVY
+    label.new(bar_index, volume, "Y", style=label.style_label_down, color=colDry, textcolor=color.black, size=size.tiny)
+else if showLowLabels and isLVQ
+    label.new(bar_index, volume, "Q", style=label.style_label_down, color=colDry, textcolor=color.black, size=size.tiny)
+
+color paintedColor = na
+if paintBars
+    if paintHV and showHVColors and allowHVColor and isHVE
+        paintedColor := colHVE
+    else if paintHV and showHVColors and allowHVColor and isHVY
+        paintedColor := colHVY
+    else if paintHV and showHVColors and allowHVColor and isHVQ
+        paintedColor := colHVQ
+    else if paintPP and pocketPivot
+        paintedColor := colPP
+    else if paintHighVol and highUpVolume
+        paintedColor := colUp
+    else if paintHighVol and highDownVolume
+        paintedColor := colDown
+    else if paintDry and dryVolume
+        paintedColor := colDry
+barcolor(paintedColor)
+
+//====================================================================
+// STATIC CHART TABLE (Shows Last Bar Only)
+//====================================================================
+tablePosition = tablePositionInput == "Top Left" ? position.top_left : tablePositionInput == "Bottom Right" ? position.bottom_right : tablePositionInput == "Bottom Left" ? position.bottom_left : position.top_right
+var table stats = table.new(tablePosition, 8, 8, border_width=1)
+
+if barstate.islast
+    table.clear(stats, 0, 0, 7, 7)
+
+    if showTable
+        string rvolTitle = showBuzz ? "Vol Buzz" : "RVol"
+        string rvolText = showBuzz ? (na(volumeBuzz) ? "—" : str.tostring(volumeBuzz, "#") + "%") : na(rvol) ? "—" : rvolAsMultiple ? str.tostring(rvol, "#.##") + "x" : str.tostring(rvol * 100, "#") + "%"
+        string avgTurnText = na(averageTurnover) ? "—" : "₹" + f_formatNumber(averageTurnover)
+        string todayTurnText = "₹" + f_formatNumber(currentTurnover)
+        string udText = na(udRatio) ? "—" : str.tostring(udRatio, "#.##")
+        string liquidityText = na(oneMinuteLiquidity) ? "—" : "₹" + f_formatNumber(oneMinuteLiquidity)
+        string projectedText = na(projectedRVol) ? "—" : str.tostring(projectedRVol, "#.##") + "x"
+        string liveVolText = f_formatNumber(volume)
+        string avgVolText = f_formatNumber(volMA)
+        
+        color hdrBG = color.new(color.gray, 70)
+        color valBG = color.new(color.black, 10)
+        color txt   = color.white
+
+        if tableLayout == "Horizontal"
+            table.cell(stats, 0, 0, "Live Vol",      bgcolor=hdrBG, text_color=txt)
+            table.cell(stats, 1, 0, "Avg Vol",       bgcolor=hdrBG, text_color=txt)
+            table.cell(stats, 2, 0, rvolTitle,       bgcolor=hdrBG, text_color=txt)
+            table.cell(stats, 3, 0, "Avg ₹Vol",      bgcolor=hdrBG, text_color=txt)
+            table.cell(stats, 4, 0, "Today ₹Vol",    bgcolor=hdrBG, text_color=txt)
+            table.cell(stats, 5, 0, "U/D",           bgcolor=hdrBG, text_color=txt)
+            table.cell(stats, 6, 0, "1m Liquidity",  bgcolor=hdrBG, text_color=txt)
+            table.cell(stats, 7, 0, "Proj RVol",     bgcolor=hdrBG, text_color=txt)
+
+            table.cell(stats, 0, 1, liveVolText,     bgcolor=valBG, text_color=txt)
+            table.cell(stats, 1, 1, avgVolText,      bgcolor=valBG, text_color=txt)
+            table.cell(stats, 2, 1, rvolText,        bgcolor=valBG, text_color=txt)
+            table.cell(stats, 3, 1, avgTurnText,     bgcolor=valBG, text_color=txt)
+            table.cell(stats, 4, 1, todayTurnText,   bgcolor=valBG, text_color=txt)
+            table.cell(stats, 5, 1, udText,          bgcolor=valBG, text_color=txt)
+            table.cell(stats, 6, 1, liquidityText,   bgcolor=valBG, text_color=txt)
+            table.cell(stats, 7, 1, projectedText,   bgcolor=valBG, text_color=txt)
+        else
+            table.cell(stats, 0, 0, "Live Vol",      bgcolor=hdrBG, text_color=txt)
+            table.cell(stats, 1, 0, liveVolText,     bgcolor=valBG, text_color=txt)
+            table.cell(stats, 0, 1, "Avg Vol",       bgcolor=hdrBG, text_color=txt)
+            table.cell(stats, 1, 1, avgVolText,      bgcolor=valBG, text_color=txt)
+            table.cell(stats, 0, 2, rvolTitle,       bgcolor=hdrBG, text_color=txt)
+            table.cell(stats, 1, 2, rvolText,        bgcolor=valBG, text_color=txt)
+            table.cell(stats, 0, 3, "Avg ₹Vol",      bgcolor=hdrBG, text_color=txt)
+            table.cell(stats, 1, 3, avgTurnText,     bgcolor=valBG, text_color=txt)
+            table.cell(stats, 0, 4, "Today ₹Vol",    bgcolor=hdrBG, text_color=txt)
+            table.cell(stats, 1, 4, todayTurnText,   bgcolor=valBG, text_color=txt)
+            table.cell(stats, 0, 5, "U/D",           bgcolor=hdrBG, text_color=txt)
+            table.cell(stats, 1, 5, udText,          bgcolor=valBG, text_color=txt)
+            table.cell(stats, 0, 6, "1m Liquidity",  bgcolor=hdrBG, text_color=txt)
+            table.cell(stats, 1, 6, liquidityText,   bgcolor=valBG, text_color=txt)
+            table.cell(stats, 0, 7, "Proj RVol",     bgcolor=hdrBG, text_color=txt)
+            table.cell(stats, 1, 7, projectedText,   bgcolor=valBG, text_color=txt)
+
+//====================================================================
+// PINE SCREENER OUTPUTS & ALERTS
+//====================================================================
+plot(pocketPivot ? 1 : 0, "SCAN Pocket Pivot", display=display.none)
+plot(isHVE ? 1 : 0, "SCAN HVE", display=display.none)
+plot(isHVY ? 1 : 0, "SCAN HVY", display=display.none)
+plot(isHVQ ? 1 : 0, "SCAN HVQ", display=display.none)
+plot(dryVolume ? 1 : 0, "SCAN Dry Volume", display=display.none)
+plot(bullSnort ? 1 : 0, "SCAN Bull Snort", display=display.none)
+plot(powerUp ? 1 : powerDown ? -1 : 0, "SCAN Power Volume", display=display.none)
+plot(rvol, "SCAN RVol", display=display.none)
+
+alertcondition(pocketPivot, "Pocket Pivot Volume", "Pocket Pivot Volume detected on {{ticker}}")
+alertcondition(bullSnort, "Bull Snort", "Bull Snort detected on {{ticker}}")
+alertcondition(powerUp, "Power Volume UP", "Bullish Power Volume detected on {{ticker}}")
+alertcondition(powerDown, "Power Volume DOWN", "Bearish Power Volume detected on {{ticker}}")
+alertcondition(isHVE, "Highest Volume Ever", "HVE detected on {{ticker}}")
+alertcondition(isHVY, "Highest Volume Year", "HVY detected on {{ticker}}")
+alertcondition(isHVQ, "Highest Volume Quarter", "HVQ detected on {{ticker}}")

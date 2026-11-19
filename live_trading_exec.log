@@ -222,3 +222,7 @@
    -> [PF1 FUTURES BUY] PERSISTENT.NS @ ₹1749.62 | Margin Blocked: ₹109,351.25
    -> [PF2 CASH BUY]    ANANDRATHI.NS @ ₹922.96 | Allocated: ₹25,000.00
 📊 [PORTFOLIO STATUS] Active PF1: 56 | Active PF2: 56 | Estimated P&L: ₹3,042.78
+[2026-11-19 16:55:20] 🟢 LIVE MARKET OPEN: Scanning pools...
+   -> [PF1 FUTURES BUY] ADANIGREEN.NS @ ₹804.68 | Margin Blocked: ₹50,292.50
+   -> [PF2 CASH BUY]    BANKBARODA.NS @ ₹859.64 | Allocated: ₹25,000.00
+📊 [PORTFOLIO STATUS] Active PF1: 57 | Active PF2: 57 | Estimated P&L: ₹1,696.09

@@ -230,3 +230,7 @@
    -> [PF1 FUTURES BUY] ETERNAL.NS @ ₹204.61 | Margin Blocked: ₹12,788.12
    -> [PF2 CASH BUY]    ABB.NS @ ₹1643.26 | Allocated: ₹25,000.00
 📊 [PORTFOLIO STATUS] Active PF1: 58 | Active PF2: 58 | Estimated P&L: ₹3,698.71
+[2026-11-23 17:40:11] 🟢 LIVE MARKET OPEN: Scanning pools...
+   -> [PF1 FUTURES BUY] SRF.NS @ ₹1293.8 | Margin Blocked: ₹80,862.50
+   -> [PF2 CASH BUY]    KAYNES.NS @ ₹1153.0 | Allocated: ₹25,000.00
+📊 [PORTFOLIO STATUS] Active PF1: 59 | Active PF2: 59 | Estimated P&L: ₹2,421.35

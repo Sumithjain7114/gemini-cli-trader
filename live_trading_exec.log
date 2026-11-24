@@ -234,3 +234,7 @@
    -> [PF1 FUTURES BUY] SRF.NS @ ₹1293.8 | Margin Blocked: ₹80,862.50
    -> [PF2 CASH BUY]    KAYNES.NS @ ₹1153.0 | Allocated: ₹25,000.00
 📊 [PORTFOLIO STATUS] Active PF1: 59 | Active PF2: 59 | Estimated P&L: ₹2,421.35
+[2026-11-24 18:59:56] 🟢 LIVE MARKET OPEN: Scanning pools...
+   -> [PF1 FUTURES BUY] SBIN.NS @ ₹1083.13 | Margin Blocked: ₹67,695.62
+   -> [PF2 CASH BUY]    OFSS.NS @ ₹1296.18 | Allocated: ₹25,000.00
+📊 [PORTFOLIO STATUS] Active PF1: 60 | Active PF2: 60 | Estimated P&L: ₹-705.87

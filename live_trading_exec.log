@@ -242,3 +242,7 @@
    -> [PF1 FUTURES BUY] BSE.NS @ ₹1819.8 | Margin Blocked: ₹113,737.50
    -> [PF2 CASH BUY]    BANCOINDIA.NS @ ₹1041.36 | Allocated: ₹25,000.00
 📊 [PORTFOLIO STATUS] Active PF1: 61 | Active PF2: 61 | Estimated P&L: ₹3,705.48
+[2026-11-26 17:40:39] 🟢 LIVE MARKET OPEN: Scanning pools...
+   -> [PF1 FUTURES BUY] EICHERMOT.NS @ ₹542.29 | Margin Blocked: ₹33,893.12
+   -> [PF2 CASH BUY]    OIL.NS @ ₹326.64 | Allocated: ₹25,000.00
+📊 [PORTFOLIO STATUS] Active PF1: 62 | Active PF2: 62 | Estimated P&L: ₹-58.56

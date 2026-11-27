@@ -246,3 +246,7 @@
    -> [PF1 FUTURES BUY] EICHERMOT.NS @ ₹542.29 | Margin Blocked: ₹33,893.12
    -> [PF2 CASH BUY]    OIL.NS @ ₹326.64 | Allocated: ₹25,000.00
 📊 [PORTFOLIO STATUS] Active PF1: 62 | Active PF2: 62 | Estimated P&L: ₹-58.56
+[2026-11-27 17:28:40] 🟢 LIVE MARKET OPEN: Scanning pools...
+   -> [PF1 FUTURES BUY] SUZLON.NS @ ₹874.97 | Margin Blocked: ₹54,685.62
+   -> [PF2 CASH BUY]    TATAPOWER.NS @ ₹1438.34 | Allocated: ₹25,000.00
+📊 [PORTFOLIO STATUS] Active PF1: 63 | Active PF2: 63 | Estimated P&L: ₹3,973.38
